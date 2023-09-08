@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import { View, Button, TextInput, StyleSheet } from 'react-native' 
 // TODO: Resolve Firebase imports 
-import firebase from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { createUserWithEmailAndPassword, getAuth } from '@firebase/auth'; 
 
 //With the necessary imports to create Register page 
 export class Register extends Component {
@@ -15,21 +15,21 @@ export class Register extends Component {
             name: ''
         }
 
-        this.onSingUp = this.onSingUp.bind(this) // Need to bind to give access to components state variables 
+        this.onSignUp = this.onSignUp.bind(this) // Need to bind to give access to components state variables 
     }
 
     // TODO: Resolve Firebase function calls and imports 
-    onSingUp(){
-        /* 
+    onSignUp(){
+        const auth = FIREBASE_AUTH;
         const { email, password, name } = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email,password)
+        createUserWithEmailAndPassword(auth,email,password)
         .then((result) => {
             console.log(result)
         })
         .catch((error) => {
             console.log(error)
-        })   
-        */
+        })    
+        
     }
 
 
