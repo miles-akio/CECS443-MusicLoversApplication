@@ -7,6 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LandingScreen from './components/auth/Landing';
 import RegisterScreen from './components/auth/Register';
+import LoginScreen from './components/auth/Login';
+import ForgotPassword from './components/auth/ForgotPass';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -15,6 +17,8 @@ function App() {
       <Stack.Navigator initialRouteName="Landing">
       <Stack.Screen name ="Landing" component = {LandingScreen} options={{headerShown:false}}/>
       <Stack.Screen name ="Register" component = {RegisterScreen}/>
+      <Stack.Screen name ="Login" component = {LoginScreen}/>
+      <Stack.Screen name ="ForgotPassword" component = {ForgotPassword}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
