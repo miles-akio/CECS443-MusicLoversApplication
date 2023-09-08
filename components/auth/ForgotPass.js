@@ -12,6 +12,11 @@ export default function ForgotPassword({navigation}) {
               // When empty this is the value in field
               placeholder = "Email address"
           />
+
+          <Button
+            // Will send a forgot password email to the user
+            title = "Send email"
+          />
     </View>
   )
 };

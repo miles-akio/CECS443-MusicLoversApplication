@@ -21,12 +21,12 @@ export default function Login({navigation}) {
           />
           <Button
             title = "Forgot Password"
-            onPress={onClick}
+            onPress= {()=> navigation.navigate('ForgotPassword')}
           Button/>
     </View>
   )
 };
-
+// onPress={()=> navigation.navigate('Login')}/>
 const onClick = () => {
   navigation.navigate('ForgotPassword');
 };
