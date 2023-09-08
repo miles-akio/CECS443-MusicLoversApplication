@@ -13,8 +13,6 @@ export default function Landing({navigation}) {
       <Button
         title = "Login"
         onPress={()=> navigation.navigate('Login')}/>
-
     </View>
-    
   )
 };
