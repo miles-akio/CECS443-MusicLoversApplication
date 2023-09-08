@@ -19,8 +19,16 @@ export default function Login({navigation}) {
           <Button
             title = "Login"
           />
+          <Button
+            title = "Forgot Password"
+            onPress={onClick}
+          Button/>
     </View>
   )
+};
+
+const onClick = () => {
+  navigation.navigate('ForgotPassword');
 };
 
 const styles = StyleSheet.create({
