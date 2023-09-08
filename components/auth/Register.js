@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { View, Button, TextInput, StyleSheet } from 'react-native' 
+import { View, Button, TextInput } from 'react-native' 
 // TODO: Resolve Firebase imports 
-import firebase from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { createUserWithEmailAndPassword, getAuth } from '@firebase/auth'; 
 
 //With the necessary imports to create Register page 
 export class Register extends Component {
@@ -15,66 +15,52 @@ export class Register extends Component {
             name: ''
         }
 
-        this.onSingUp = this.onSingUp.bind(this) // Need to bind to give access to components state variables 
+        this.onSignUp = this.onSignUp.bind(this) // Need to bind to give access to components state variables 
     }
 
     // TODO: Resolve Firebase function calls and imports 
-    onSingUp(){
-        /* 
+    onSignUp(){
+        const auth = FIREBASE_AUTH;
         const { email, password, name } = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email,password)
+        createUserWithEmailAndPassword(auth,email,password)
         .then((result) => {
             console.log(result)
         })
         .catch((error) => {
             console.log(error)
-        })   
-        */
+        })    
+        
     }
 
+  render() {
+    return (
+      <View>
+        <TextInput 
+            // When empty this is the value thats filled
+            placeholder = "name"
+            // JS assumes that the argugment we pass is same as the variable we created 
+            onChangeText={(name)=> this.setState({name})}
+        />
 
-    render() {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <TextInput
-              // Formatting the appearance
-              style={styles.input} 
-              // When empty this is the value thats filled
-              placeholder = "Name"
-              // JS assumes that the argugment we pass is same as the variable we created 
-              onChangeText={(name)=> this.setState({name})}
-          />
-  
-          <TextInput
-              style={styles.input} 
-              placeholder = "Email" 
-              onChangeText={(name)=> this.setState({email})}
-          />
-  
-          <TextInput 
-              style={styles.input}
-              placeholder = "Password"
-              secureEntry = {true} // secures passowrd text 
-              onChangeText={(name)=> this.setState({password})}
-          />
-  
-          <Button
-              onPress ={()=> this.onSignUp()}
-              title = "Sign Up"
-           />
-          
-        </View>
-      )
-    }
+        <TextInput 
+            placeholder = "email" 
+            onChangeText={(email)=> this.setState({email})}
+        />
+
+        <TextInput 
+            placeholder = "password"
+            secureEntry = {true} // secures passowrd text 
+            onChangeText={(password)=> this.setState({password})}
+        />
+
+        <Button
+            onPress ={()=> this.onSignUp()}
+            title = "Sign Up"
+         />
+        
+      </View>
+    )
   }
-  
-  const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
-  });
+}
 
 export default Register;
