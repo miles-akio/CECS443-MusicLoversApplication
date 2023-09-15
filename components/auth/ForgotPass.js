@@ -10,7 +10,7 @@ export default function ForgotPassword({navigation}) {
               // Creating a field to input email
               style={styles.input} 
               // When empty this is the value in field
-              placeholder = "Email address"
+              placeholder = "Your MindBridge Email Address"
           />
 
           <Button
