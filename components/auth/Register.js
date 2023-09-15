@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { View, Button, TextInput } from 'react-native' 
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { createUserWithEmailAndPassword, getAuth } from '@firebase/auth'; 
+import { createUserWithEmailAndPassword } from '@firebase/auth'; 
 
 //With the necessary imports to create Register page 
 export class Register extends Component {
