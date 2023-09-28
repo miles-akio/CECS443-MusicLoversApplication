@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Button, TextInput } from 'react-native' 
+import { View, Button, Text, Image, StyleSheet,TouchableOpacity, TextInput } from 'react-native' 
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from '@firebase/auth'; 
@@ -34,33 +34,92 @@ export class Register extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput 
-            // When empty this is the value thats filled
-            placeholder = "name"
-            // JS assumes that the argugment we pass is same as the variable we created 
-            onChangeText={(name)=> this.setState({name})}
+      <View style={styles.container}>
+      
+        <Image 
+        // Currently Imnage is directly in the componentse folder need to figure out how to route from images folder
+        source={require('./mdi_user.png')}
+        style={styles.image}
         />
 
-        <TextInput 
-            placeholder = "email" 
-            onChangeText={(email)=> this.setState({email})}
-        />
+        <TextInput style = {styles.textInput}
+                // When emptythis ist he value that's filled
+                placeholder = "name"
+                // JS assumes that the argugment we pass is same as the variable we created
+                onChangeText={(name)=> this.setState({name})} 
+            >
+            </TextInput>
 
-        <TextInput 
-            placeholder = "password"
-            secureEntry = {true} // secures passowrd text 
-            onChangeText={(password)=> this.setState({password})}
-        />
+            <TextInput style = {styles.textInput}
+                placeholder = "email"
+                onChangeText={(email)=> this.setState({email})} 
+            >
+            </TextInput>
 
-        <Button
-            onPress ={()=> this.onSignUp()}
-            title = "Sign Up"
-         />
-        
+            <TextInput style = {styles.textInput}
+                placeholder = "password"
+                onChangeText={(password)=> this.setState({password})} 
+            >
+            </TextInput>
+
+            <TouchableOpacity style = {styles.button}
+                onPress ={()=> this.onSignUp()}>
+                <Text style={styles.buttonText}> Sign Up </Text>
+        </TouchableOpacity>
       </View>
     )
   }
 }
 
 export default Register;
+
+// TODO: Create a style sheet page and import it 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#D4F0EF',
+    },
+    image: {
+      justifyContent: 'center',
+      width: 100, // Set the width of the image
+      height: 100, // Set the height of the image
+      resizeMode: 'contain', // You can adjust the resizeMode as needed (cover, contain, stretch, etc.)
+      marginBottom: 15,
+    },
+    image2: {
+        justifyContent: 'center',
+        width: 400, // Set the width of the image
+        height: 380, // Set the height of the image
+        resizeMode: 'contain', // You can adjust the resizeMode as needed (cover, contain, stretch, etc.)
+        margin: 30,
+      },
+    title: {
+      fontSize: 24, // Adjust the font size as needed
+      fontWeight: 'bold', // Make the text bold
+      color: 'black', // Set the text color to black
+      },
+    button: {
+      width: 200, // Set the width of the button
+      height: 40, // Set the height of the button
+      borderRadius: 20, // Adjust the border radius to make the edges rounded
+      backgroundColor: 'white', // Button background color
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop:10,
+    },
+    buttonText: {
+      color: 'black',
+      fontSize: 18,
+      fontWeight: 400,
+    },
+    textInput: {
+        width: '70%',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 5,
+      },
+  });
