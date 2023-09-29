@@ -19,7 +19,7 @@ function App() {
       <Stack.Screen name ="Landing" component = {LandingScreen} options={{headerShown:false}}/>
       <Stack.Screen name ="Register" component = {RegisterScreen}/>
       <Stack.Screen name ="Login" component = {LoginScreen}/>
-      <Stack.Screen name ="Container" component = {Container}/> 
+      <Stack.Screen name ="Container" component = {Container} options={{headerShown:false}}/> 
       <Stack.Screen name ="ForgotPassword" component = {ForgotPassword}/>
       </Stack.Navigator>
     </NavigationContainer>

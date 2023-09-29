@@ -1,9 +1,8 @@
 import React, { useEffect,Component }from 'react';
-import { View, Button, TextInput, StyleSheet} from 'react-native' 
+import { View, Button, TextInput, StyleSheet} from 'react-native'; 
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
-
 
 //With the necessary imports to create Register page 
 export class Login extends Component {
