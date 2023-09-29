@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import { View, Button, TextInput, StyleSheet } from 'react-native' 
+import React, { useEffect,Component }from 'react';
+import { View, Button, TextInput, StyleSheet} from 'react-native'; 
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
@@ -27,6 +27,9 @@ export class Login extends Component {
           // Signed in 
           const user = userCredential.user;
           console.log("I AM SIGNED IN: ", {user});
+
+          
+          this.props.navigation.navigate('Container') //avlokita's work
         })
         .catch((error) => {
             console.log(error)
