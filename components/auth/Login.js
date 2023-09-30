@@ -1,5 +1,6 @@
 import React, { useEffect,Component }from 'react';
-import { View, Button, TextInput, StyleSheet} from 'react-native'; 
+import { View, Text, TextInput, TouchableOpacity} from 'react-native'; 
+import {styles} from '../auth/Styles'
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
@@ -39,42 +40,30 @@ export class Login extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.container}>
         <TextInput 
-            style={styles.input} 
+            style={styles.textInput} 
             placeholder = "email" 
             onChangeText={(email)=> this.setState({email})}
         />
 
-        <TextInput 
-          style={styles.input} 
+        <TextInput style={styles.textInput} 
             placeholder = "password"
             secureEntry = {true} // secures passowrd text 
             onChangeText={(password)=> this.setState({password})}
         />
+        <TouchableOpacity style = {styles.button}
+            onPress ={()=> this.onLogIn()}>
+        <Text  style={styles.buttonText}  > Login </Text>
+        </TouchableOpacity>
 
-        <Button
-            onPress ={()=> this.onLogIn()}
-            title = "Login"
-         />
-
-        <Button
-            title = "Forgot Password"
-            onPress= {()=> this.props.navigation.navigate("ForgotPassword")}
-          />
-        
+        <TouchableOpacity style = {styles.button}
+            onPress= {()=> this.props.navigation.navigate("ForgotPassword")}>
+        <Text  style={styles.buttonText}  > Forgot Password </Text>
+        </TouchableOpacity>
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
 
 export default Login;

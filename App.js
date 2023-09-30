@@ -10,18 +10,20 @@ import RegisterScreen from './components/auth/Register';
 import LoginScreen from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPass';
 import Container from './components/auth/navigation/container';
+import AboutScreen from './components/auth/About';
 
 const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
-      <Stack.Screen name ="Landing" component = {LandingScreen} options={{headerShown:false}}/>
-      <Stack.Screen name ="Register" component = {RegisterScreen}/>
-      <Stack.Screen name ="Login" component = {LoginScreen}/>
-      <Stack.Screen name ="Container" component = {Container} options={{headerShown:false}}/> 
-      <Stack.Screen name ="ForgotPassword" component = {ForgotPassword}/>
-      </Stack.Navigator>
+        <Stack.Screen name ="Landing" component        = {LandingScreen} options={{headerShown:false}}/>
+        <Stack.Screen name ="Register" component       = {RegisterScreen}/>
+        <Stack.Screen name ="Login" component          = {LoginScreen}/>
+        <Stack.Screen name ="Container" component      = {Container} options={{headerShown:false}}/> 
+        <Stack.Screen name ="ForgotPassword" component = {ForgotPassword}/>
+        <Stack.Screen name ="About" component          ={AboutScreen}/>
+      </Stack.Navigator>  
     </NavigationContainer>
   );
 }
