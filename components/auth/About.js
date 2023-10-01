@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import {styles} from '../auth/Styles'
+import {styles} from '../../Styles'
 
 export default function ForgotPassword({navigation}) {
   return (
