@@ -1,7 +1,7 @@
 import React, { useEffect,Component }from 'react';
 import { View, Button, TextInput, StyleSheet, ImageBackground, Image,  TouchableOpacity, Text } from 'react-native'; 
 // TODO: Resolve Firebase imports 
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import {FIREBASE_AUTH } from '../../App';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
 
 //With the necessary imports to create Register page 
@@ -58,6 +58,10 @@ export class Login extends Component {
             secureEntry = {true} // secures passowrd text 
             onChangeText={(password)=> this.setState({password})}
         />
+        <TouchableOpacity style = {styles.button}
+            onPress ={()=> this.onLogIn()}>
+        <Text  style={styles.buttonText}  > Login </Text>
+        </TouchableOpacity>
 
           <TouchableOpacity
           

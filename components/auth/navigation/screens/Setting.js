@@ -4,6 +4,7 @@ import * as React from 'react'
 import { StyleSheet, View, Text , Image, ImageBackground} from "react-native"
 
 export default function Settings({navigation}){
+
     return(
         <View style = {styles.container}>
             <Image source={require('./background2.png')}/>
