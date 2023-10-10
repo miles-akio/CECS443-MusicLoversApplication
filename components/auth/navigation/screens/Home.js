@@ -7,14 +7,10 @@ import { StyleSheet, View, Text, Image } from "react-native"
 export default function Home({navigation}){
     return(
         <View style = {styles.container}>
-            <Image source={require('../../../../assets/background.png')}/>
+            <Image source={require('./background2.png')}/>
         </View>
     )
-        /* <View style= {styles.container}w>
-            <Text style={styles.temp} >
-                Hello!                      
-            </Text>   
-        </View> */
+        
 }
 
 const styles = StyleSheet.create({

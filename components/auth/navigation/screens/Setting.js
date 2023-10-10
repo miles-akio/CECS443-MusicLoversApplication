@@ -1,15 +1,16 @@
 //Avlokita's Work
 
 import * as React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import { StyleSheet, View, Text , Image, ImageBackground} from "react-native"
 
 export default function Settings({navigation}){
 
     return(
         <View style = {styles.container}>
+            <Image source={require('./background2.png')}/>
             <Text
                 style = {styles.temp}>
-                    This is settings
+                    Main Feed
             </Text>
         </View>
     )
