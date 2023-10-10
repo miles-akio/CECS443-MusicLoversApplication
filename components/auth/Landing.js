@@ -1,9 +1,14 @@
 import React from 'react';
-import { Text, Button, View, Image, StyleSheet,TouchableOpacity } from 'react-native';
+import { Text, Button, View, Image, StyleSheet,TouchableOpacity, ImageBackground } from 'react-native';
 
 
 export default function Landing({navigation}) {
   return (
+
+  <ImageBackground
+        source={require('../../assets/background.png')} 
+        style={{ flex: 1 }}
+      >
     <View style={styles.container}>
       
       <Image 
@@ -35,6 +40,7 @@ export default function Landing({navigation}) {
     
 
     </View>
+  </ImageBackground>
   )
 };
 
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightpink',
+    
   },
   image: {
     justifyContent: 'center',

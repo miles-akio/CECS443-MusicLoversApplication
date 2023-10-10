@@ -1,5 +1,5 @@
 import React, { useEffect,Component }from 'react';
-import { View, Button, TextInput, StyleSheet} from 'react-native'; 
+import { View, Button, TextInput, StyleSheet, ImageBackground, Image,  TouchableOpacity, Text } from 'react-native'; 
 // TODO: Resolve Firebase imports 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
@@ -28,6 +28,7 @@ export class Login extends Component {
           const user = userCredential.user;
           console.log("I AM SIGNED IN: ", {user});
 
+// 2023-09-29 14:20:01.981 [info] > git show --textconv :components/auth/navigation/container.js [107ms]
           
           this.props.navigation.navigate('Container') //avlokita's work
         })
@@ -39,42 +40,100 @@ export class Login extends Component {
 
   render() {
     return (
+
+     
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+       
         <TextInput 
             style={styles.input} 
-            placeholder = "email" 
+            placeholder = "Email" 
+            placeholderTextColor="white"
             onChangeText={(email)=> this.setState({email})}
         />
 
         <TextInput 
           style={styles.input} 
-            placeholder = "password"
+            placeholder = "Password"
+            placeholderTextColor="white"
             secureEntry = {true} // secures passowrd text 
             onChangeText={(password)=> this.setState({password})}
         />
 
-        <Button
-            onPress ={()=> this.onLogIn()}
-            title = "Login"
-         />
+          <TouchableOpacity
+          
+          onPress={() => this.onLogIn()}
+        >
+          <Text style={styles.buttonLogin} >Login</Text>
+        </TouchableOpacity>
 
-        <Button
-            title = "Forgot Password"
-            onPress= {()=> this.props.navigation.navigate("ForgotPassword")}
-          />
-        
+
+        <TouchableOpacity
+         
+          onPress={() => this.props.navigation.navigate("ForgotPassword")}
+        >
+          <Text style={styles.buttonForgot}>Forgot Password</Text>
+        </TouchableOpacity>
+          
+        <Image
+          source={require('./register_hug.png')} // Replace with the path to your image
+          style={styles.bottomImage}
+        /> 
       </View>
+      
     )
   }
 }
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    //Avlokita's work--editted changes to the layout
+      width: 200, // Set the width of the button
+      height: 46, // Set the height of the button
+      borderRadius: 20, // Adjust the border radius to make the edges rounded
+      backgroundColor: 'teal', // Button background color
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+      alignContent:'center',
+      textAlign: 'center',
+      width: 300,
+      color:'white',
+      fontSize: 25
   },
+  bottomImage: {
+   
+    overflow: 'hidden', // This is important to clip the image
+    borderBottomLeftRadius: 50, // Adjust the radius as needed
+    borderBottomRightRadius: 50, // Adjust the radius as needed
+    width: 400, // Set the width of the image
+    height: 400,  
+    marginTop: 40,
+    alignSelf:'flex-end'
+   
+},
+
+buttonLogin: {
+  color:'white',
+  width: 200,
+  height: 40,
+  borderRadius: 20,
+  backgroundColor: 'orange',
+  // justifyContent: 'center',
+  // alignItems: 'center',
+  marginTop: 10,
+  alignSelf: 'center',
+  textAlign:'center',
+  fontSize: 25,
+  marginTop: 50
+},
+
+
+buttonForgot:{
+  marginTop: 20,
+  fontSize: 15,
+  fontStyle: 'italic'
+}
+
 });
 
 export default Login;
