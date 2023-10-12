@@ -53,22 +53,28 @@ export class Register extends Component {
         style={styles.image}
         />
 
+       
+
         <TextInput style = {styles.textInput}
                 // When emptythis ist he value that's filled
-                placeholder = "name"
+                placeholder = "Name" 
+                placeholderTextColor="white"
                 // JS assumes that the argugment we pass is same as the variable we created
                 onChangeText={(name)=> this.setState({name})} 
             >
             </TextInput>
 
             <TextInput style = {styles.textInput}
-                placeholder = "email"
+                placeholder = "Email"
+                placeholderTextColor="white"
+                
                 onChangeText={(email)=> this.setState({email})} 
             >
             </TextInput>
 
             <TextInput style = {styles.textInput}
-                placeholder = "password"
+                placeholder = "Password"
+                placeholderTextColor="white"
                 onChangeText={(password)=> this.setState({password})} 
             >
             </TextInput>
@@ -77,6 +83,10 @@ export class Register extends Component {
                 onPress ={()=> this.onSignUp()}>
                 <Text style={styles.buttonText}> Sign Up </Text>
         </TouchableOpacity>
+         <Image
+          source={require('./register_hug.png')} // Replace with the path to your image
+          style={styles.bottomImage}
+        /> 
       </View>
     )
   }
@@ -86,12 +96,20 @@ export default Register;
 
 // TODO: Create a style sheet page and import it 
 const styles = StyleSheet.create({
+  //Avlokita's work--editted changes to the layout
+   
     container: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       backgroundColor: '#D4F0EF',
+    
+     
     },
+
+  
+
+
     image: {
       justifyContent: 'center',
       width: 100, // Set the width of the image
@@ -107,30 +125,56 @@ const styles = StyleSheet.create({
         margin: 30,
       },
     title: {
-      fontSize: 24, // Adjust the font size as needed
-      fontWeight: 'bold', // Make the text bold
+      fontSize: 30, // Adjust the font size as needed
+      fontWeight: 'strong', // Make the text bold
       color: 'black', // Set the text color to black
+      borderWidth: 20,
+      borderColor:'black'
       },
     button: {
       width: 200, // Set the width of the button
       height: 40, // Set the height of the button
-      borderRadius: 20, // Adjust the border radius to make the edges rounded
+      borderRadius: 20, // Adjust the border radius to make the edges rounded     //sign up button
       backgroundColor: 'white', // Button background color
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop:10,
+      marginTop:30,
+      width: 300
+      
+      
     },
     buttonText: {
       color: 'black',
-      fontSize: 18,
+      fontSize: 25,
       fontWeight: 400,
+      
+      
+    },textInput: {
+      color:'white',
+      width: 200, // Set the width of the button
+      height: 40, // Set the height of the button
+      borderRadius: 20, // Adjust the border radius to make the edges rounded
+      backgroundColor: 'teal', // Button background color
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+      alignContent:'center',
+      textAlign: 'center',
+      width: 250,
+      
+      
+
+   
     },
-    textInput: {
-        width: '70%',
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 5,
-      },
+    bottomImage: {
+   
+      overflow: 'hidden', // This is important to clip the image
+      borderBottomLeftRadius: 50, // Adjust the radius as needed
+      borderBottomRightRadius: 50, // Adjust the radius as needed
+      width: 400, // Set the width of the image
+      height: 400,  
+      marginTop: 20
+     
+  },
+    
   });

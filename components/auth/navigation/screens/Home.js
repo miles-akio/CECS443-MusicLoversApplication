@@ -12,19 +12,11 @@ export default function Home({route, navigation}){
 
     return(        
         <View style = {styles.container}>
-            <Image source={require('../../../../assets/background.png')}/>
-
-
+            <Image source={require('./background2.png')}/>
             <Text style ={styles.title}>Welcome {email}</Text>
-
-
         </View>
     )
-        /* <View style= {styles.container}w>
-            <Text style={styles.temp} >
-                Hello!                      
-            </Text>   
-        </View> */
+        
 }
 
 // TODO: Add to styling sheet instead
