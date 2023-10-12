@@ -53,28 +53,22 @@ export class Register extends Component {
         style={styles.image}
         />
 
-       
-
         <TextInput style = {styles.textInput}
                 // When emptythis ist he value that's filled
-                placeholder = "Name" 
-                placeholderTextColor="white"
+                placeholder = "name"
                 // JS assumes that the argugment we pass is same as the variable we created
                 onChangeText={(name)=> this.setState({name})} 
             >
             </TextInput>
 
             <TextInput style = {styles.textInput}
-                placeholder = "Email"
-                placeholderTextColor="white"
-                
+                placeholder = "email"
                 onChangeText={(email)=> this.setState({email})} 
             >
             </TextInput>
 
             <TextInput style = {styles.textInput}
-                placeholder = "Password"
-                placeholderTextColor="white"
+                placeholder = "password"
                 onChangeText={(password)=> this.setState({password})} 
             >
             </TextInput>
@@ -83,10 +77,12 @@ export class Register extends Component {
                 onPress ={()=> this.onSignUp()}>
                 <Text style={styles.buttonText}> Sign Up </Text>
         </TouchableOpacity>
-         <Image
-          source={require('./register_hug.png')} // Replace with the path to your image
+
+        <Image
+          source={require('../../assets/register_hug.png')} // Replace with the path to your image
           style={styles.bottomImage}
         /> 
+
       </View>
     )
   }
@@ -95,6 +91,7 @@ export class Register extends Component {
 export default Register;
 
 // TODO: Create a style sheet page and import it 
+// TODO: Create a style sheet page and import it 
 const styles = StyleSheet.create({
   //Avlokita's work--editted changes to the layout
    
@@ -102,13 +99,8 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: '#D4F0EF',
-    
-     
+      backgroundColor: '#D4F0EF', 
     },
-
-  
-
 
     image: {
       justifyContent: 'center',

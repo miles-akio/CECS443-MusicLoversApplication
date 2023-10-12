@@ -26,8 +26,6 @@ export default function Container({route,navigation}){
                 initialParams={{ user }} // Pass user as a parameter
                 />
                 <Tab.Screen name="Setting" component={Setting} />
-                <Tab.Screen name="More Options" component={MoreOptions} />
-                <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Add Post" component={Setting} />
                 <Tab.Screen name="User Profile" component={UserProfile} />
             </Tab.Navigator>
