@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import { View, Button, Text, Image, StyleSheet,TouchableOpacity, TextInput } from 'react-native' 
 // TODO: Resolve Firebase imports 
 import {FIREBASE_AUTH } from '../../App';
-import { createUserWithEmailAndPassword } from '@firebase/auth'; 
+import { FIRESTORE_DB } from '../../App';
+import { createUserWithEmailAndPassword} from '@firebase/auth';
+import { setDoc, doc} from "firebase/firestore";
+
 
 //With the necessary imports to create Register page 
 export class Register extends Component {
@@ -21,24 +24,32 @@ export class Register extends Component {
     // TODO: Resolve Firebase function calls and imports 
     onSignUp(){
         const auth = FIREBASE_AUTH;
+        const db = FIRESTORE_DB; 
         const { email, password, name } = this.state;
+        
         createUserWithEmailAndPassword(auth,email,password)
         .then((result) => {
-            console.log(result)
+              try {
+                const user = result.user; // Assuming you have access to the authenticated user
+                const docRef = setDoc(doc(db, "users", user.uid), {
+                  name,
+                  email
+                })
+              } catch (e) {
+                console.error("Error adding document: ", e);
+              }    
         })
         .catch((error) => {
             console.log(error)
         })    
-        
     }
 
   render() {
     return (
       <View style={styles.container}>
-      
         <Image 
         // Currently Imnage is directly in the componentse folder need to figure out how to route from images folder
-        source={require('./mdi_user.png')}
+        source={require('../../assets/mdi_user.png')}
         style={styles.image}
         />
 
