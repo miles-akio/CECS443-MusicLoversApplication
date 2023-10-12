@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Button, View, Image, StyleSheet,TouchableOpacity, ImageBackground } from 'react-native';
 
+
 export default function Landing({navigation}) {
   return (
 
@@ -12,7 +13,7 @@ export default function Landing({navigation}) {
       
       <Image 
       // Currently Imnage is directly in the componentse folder need to figure out how to route from images folder
-      source={require('../../assets/MindBridge_Logo.png')}
+      source={require('./MindBridge_Logo.png')}
       style={styles.image}
       />
 
