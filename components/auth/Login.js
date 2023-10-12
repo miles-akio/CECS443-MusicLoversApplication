@@ -26,14 +26,11 @@ export class Login extends Component {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          const email = user.email
-          const Uid = user.uid
-          console.log("============================================")
-          console.log("From Login")
           console.log("I AM SIGNED IN: ", {user});
-          console.log("============================================")
+
+// 2023-09-29 14:20:01.981 [info] > git show --textconv :components/auth/navigation/container.js [107ms]
           
-          this.props.navigation.navigate('Container', { user }); // passing user as props to Container
+          this.props.navigation.navigate('Container') //avlokita's work
         })
         .catch((error) => {
             console.log(error)
