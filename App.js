@@ -7,6 +7,7 @@ import {styles} from './Styles'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { getFirestore} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,6 +24,7 @@ const firebaseConfig = {
 
 export const FIREBASE_APP = initializeApp(firebaseConfig); 
 export const FIREBASE_AUTH = getAuth(FIREBASE_APP); 
+export const FIRESTORE_DB = getFirestore(FIREBASE_APP);
 
 import LandingScreen from './components/auth/Landing';
 import RegisterScreen from './components/auth/Register';
@@ -50,6 +52,14 @@ export class App extends Component {
           loaded:true,
         })
       }else{
+        console.log("The user:", {user})
+        const email = user.email;
+        const uid = user.uid
+        console.log("==================================================")
+        console.log("From App")
+        console.log("The user:", {email})
+        console.log("The user:", {uid})
+        console.log("==================================================")
         this.setState({
           loggedIn: true,
           loaded:true,
@@ -64,11 +74,11 @@ export class App extends Component {
     if (!loaded){
       return(
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          <Text style={styles.title}>Loading...</Text>
         </View>
       )
     }
-    
+
     // Todo Switch off once sign out is implemented 
     // <Stack.Navigator initialRouteName={loggedIn ? 'Container': 'Landing'}>
     return (

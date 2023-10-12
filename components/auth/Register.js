@@ -3,35 +3,34 @@ import { View, Button, Text, Image, StyleSheet,TouchableOpacity, TextInput } fro
 // TODO: Resolve Firebase imports 
 import {FIREBASE_AUTH } from '../../App';
 import { createUserWithEmailAndPassword } from '@firebase/auth'; 
+import { FIRESTORE_DB } from '../../App';
+import { setDoc, doc} from "firebase/firestore";
+
 
 //With the necessary imports to create Register page 
 export class Register extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            email: '',
-            password: '',
-            name: ''
-        }
-
-        this.onSignUp = this.onSignUp.bind(this) // Need to bind to give access to components state variables 
-    }
-
     // TODO: Resolve Firebase function calls and imports 
     onSignUp(){
         const auth = FIREBASE_AUTH;
+        const db = FIRESTORE_DB; 
         const { email, password, name } = this.state;
+
         createUserWithEmailAndPassword(auth,email,password)
         .then((result) => {
-            console.log(result)
+              try {
+                const user = result.user; // Assuming you have access to the authenticated user
+                const docRef = setDoc(doc(db, "users", user.uid), {
+                  name,
+                  email
+                })
+              } catch (e) {
+                console.error("Error adding document: ", e);
+              }    
         })
         .catch((error) => {
             console.log(error)
         })    
-        
     }
-
   render() {
     return (
       <View style={styles.container}>
@@ -68,7 +67,7 @@ export class Register extends Component {
         </TouchableOpacity>
 
         <Image
-          source={require('../../assets/register_hug.png')} // Replace with the path to your image
+          source={require('./register_hug.png')} // Replace with the path to your image
           style={styles.bottomImage}
         /> 
 

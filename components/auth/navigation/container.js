@@ -11,9 +11,14 @@ import UserProfile from './screens/UserProfile';
 
 const Tab = createBottomTabNavigator();
 
-export default function Container({navigation}){
+export default function Container({navigation, route}){const user = route.params?.user;
+    const email = user.email
+    const Uid = user.uid
+    console.log("USER OBJECT FROM THE CONTAINER", {user})
+    console.log("USER FROM THE CONTAINER:", {email})
+    console.log("USER UID FROM THE CONTAINER:", {Uid})
     return(
-        
+
         <NavigationContainer independent={true}>
             <Tab.Navigator screenOptions={{headerShown: false}}>
                 <Tab.Screen name="Home" component={Home} 
