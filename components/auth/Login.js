@@ -82,7 +82,7 @@ export class Login extends Component {
         </TouchableOpacity>
           
         <Image
-          source={require('./register_hug.png')} // Replace with the path to your image
+          source={require('../../assets/register_hug.png')} // Replace with the path to your image
           style={styles.bottomImage}
         /> 
       </View>
