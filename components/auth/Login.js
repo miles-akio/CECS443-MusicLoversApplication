@@ -26,14 +26,13 @@ export class Login extends Component {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log("I AM SIGNED IN: ", {user});
           const email = user.email
           const Uid = user.uid
           console.log("============================================")
           console.log("From Login")
           console.log("I AM SIGNED IN: ", {user});
           console.log("============================================")
-
+          
           this.props.navigation.navigate('Container', { user }); // passing user as props to Container
         })
         .catch((error) => {
@@ -83,7 +82,7 @@ export class Login extends Component {
         </TouchableOpacity>
           
         <Image
-          source={require('./register_hug.png')} // Replace with the path to your image
+          source={require('../../assets/register_hug.png')} // Replace with the path to your image
           style={styles.bottomImage}
         /> 
       </View>

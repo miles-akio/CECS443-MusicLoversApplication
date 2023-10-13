@@ -11,7 +11,8 @@ import UserProfile from './screens/UserProfile';
 
 const Tab = createBottomTabNavigator();
 
-export default function Container({navigation, route}){const user = route.params?.user;
+export default function Container({route,navigation}){
+    const user = route.params?.user;
     const email = user.email
     const Uid = user.uid
     console.log("USER OBJECT FROM THE CONTAINER", {user})

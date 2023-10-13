@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import { View, Button, Text, Image, StyleSheet,TouchableOpacity, TextInput } from 'react-native' 
 // TODO: Resolve Firebase imports 
 import {FIREBASE_AUTH } from '../../App';
-import { createUserWithEmailAndPassword } from '@firebase/auth'; 
 import { FIRESTORE_DB } from '../../App';
+import { createUserWithEmailAndPassword} from '@firebase/auth';
 import { setDoc, doc} from "firebase/firestore";
 
 
@@ -14,7 +14,6 @@ export class Register extends Component {
         const auth = FIREBASE_AUTH;
         const db = FIRESTORE_DB; 
         const { email, password, name } = this.state;
-
         createUserWithEmailAndPassword(auth,email,password)
         .then((result) => {
               try {
@@ -34,10 +33,9 @@ export class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
-      
         <Image 
         // Currently Imnage is directly in the componentse folder need to figure out how to route from images folder
-        source={require('./mdi_user.png')}
+        source={require('../../assets/mdi_user.png')}
         style={styles.image}
         />
 
@@ -67,7 +65,7 @@ export class Register extends Component {
         </TouchableOpacity>
 
         <Image
-          source={require('./register_hug.png')} // Replace with the path to your image
+          source={require('../../assets/register_hug.png')} // Replace with the path to your image
           style={styles.bottomImage}
         /> 
 
