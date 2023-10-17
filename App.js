@@ -32,6 +32,7 @@ import LoginScreen from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPass';
 import Container from './components/auth/navigation/container';
 import AboutScreen from './components/auth/About';
+import FAQ from './components/auth/FAQ';
 
 const Stack = createNativeStackNavigator();
 const auth = FIREBASE_AUTH;
@@ -90,6 +91,8 @@ export class App extends Component {
           <Stack.Screen name ="Container" component      = {Container} options={{headerShown:false}}/> 
           <Stack.Screen name ="ForgotPassword" component = {ForgotPassword}/>
           <Stack.Screen name ="About" component          ={AboutScreen}/>
+          <Stack.Screen name ="FAQ" component          ={FAQ}/>
+
         </Stack.Navigator>  
       </NavigationContainer>
     );
