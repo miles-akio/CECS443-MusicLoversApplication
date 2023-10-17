@@ -4,6 +4,7 @@ import { Text, Button, View, Image, StyleSheet,TouchableOpacity } from 'react-na
 
 export default function Landing({navigation}) {
   return (
+<<<<<<< Updated upstream
     <View style={styles.container}>
       
       <Image 
@@ -33,6 +34,15 @@ export default function Landing({navigation}) {
         <Text style={styles.buttonText}> About  </Text>
       </TouchableOpacity>
     
+=======
+    <View style={{flex:1, justifyContent: 'center'}}>
+      <Button
+        title = "Register"
+        onPress={()=> navigation.navigate('Register')}/>
+        <Button
+        title = "FAQs"
+        onPress={()=> navigation.navigate('FAQs')}/>
+>>>>>>> Stashed changes
 
     </View>
   )
