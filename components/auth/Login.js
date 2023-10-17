@@ -1,6 +1,5 @@
 import React, { useEffect,Component }from 'react';
-import { View, Text, TextInput, TouchableOpacity} from 'react-native'; 
-import {styles} from '../../Styles'
+import { View, Button, TextInput, StyleSheet, ImageBackground, Image,  TouchableOpacity, Text } from 'react-native'; 
 // TODO: Resolve Firebase imports 
 import {FIREBASE_AUTH } from '../../App';
 import { signInWithEmailAndPassword } from '@firebase/auth'; 
@@ -27,10 +26,14 @@ export class Login extends Component {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
+          const email = user.email
+          const Uid = user.uid
+          console.log("============================================")
+          console.log("From Login")
           console.log("I AM SIGNED IN: ", {user});
-
+          console.log("============================================")
           
-          this.props.navigation.navigate('Container') //avlokita's work
+          this.props.navigation.navigate('Container', { user }); // passing user as props to Container
         })
         .catch((error) => {
             console.log(error)
@@ -40,15 +43,21 @@ export class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+
+     
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+       
         <TextInput 
-            style={styles.textInput} 
-            placeholder = "email" 
+            style={styles.input} 
+            placeholder = "Email" 
+            placeholderTextColor="white"
             onChangeText={(email)=> this.setState({email})}
         />
 
-        <TextInput style={styles.textInput} 
-            placeholder = "password"
+        <TextInput 
+          style={styles.input} 
+            placeholder = "Password"
+            placeholderTextColor="white"
             secureEntry = {true} // secures passowrd text 
             onChangeText={(password)=> this.setState({password})}
         />
@@ -57,13 +66,81 @@ export class Login extends Component {
         <Text  style={styles.buttonText}  > Login </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style = {styles.button}
-            onPress= {()=> this.props.navigation.navigate("ForgotPassword")}>
-        <Text  style={styles.buttonText}  > Forgot Password </Text>
+          <TouchableOpacity
+          
+          onPress={() => this.onLogIn()}
+        >
+          <Text style={styles.buttonLogin} >Login</Text>
         </TouchableOpacity>
+
+
+        <TouchableOpacity
+         
+          onPress={() => this.props.navigation.navigate("ForgotPassword")}
+        >
+          <Text style={styles.buttonForgot}>Forgot Password</Text>
+        </TouchableOpacity>
+          
+        <Image
+          source={require('../../assets/register_hug.png')} // Replace with the path to your image
+          style={styles.bottomImage}
+        /> 
       </View>
+      
     )
   }
 }
+
+const styles = StyleSheet.create({
+  input: {
+    //Avlokita's work--editted changes to the layout
+      width: 200, // Set the width of the button
+      height: 46, // Set the height of the button
+      borderRadius: 20, // Adjust the border radius to make the edges rounded
+      backgroundColor: 'teal', // Button background color
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+      alignContent:'center',
+      textAlign: 'center',
+      width: 300,
+      color:'white',
+      fontSize: 25
+  },
+  bottomImage: {
+   
+    overflow: 'hidden', // This is important to clip the image
+    borderBottomLeftRadius: 50, // Adjust the radius as needed
+    borderBottomRightRadius: 50, // Adjust the radius as needed
+    width: 400, // Set the width of the image
+    height: 400,  
+    marginTop: 40,
+    alignSelf:'flex-end'
+   
+},
+
+buttonLogin: {
+  color:'white',
+  width: 200,
+  height: 40,
+  borderRadius: 20,
+  backgroundColor: 'orange',
+  // justifyContent: 'center',
+  // alignItems: 'center',
+  marginTop: 10,
+  alignSelf: 'center',
+  textAlign:'center',
+  fontSize: 25,
+  marginTop: 50
+},
+
+
+buttonForgot:{
+  marginTop: 20,
+  fontSize: 15,
+  fontStyle: 'italic'
+}
+
+});
 
 export default Login;

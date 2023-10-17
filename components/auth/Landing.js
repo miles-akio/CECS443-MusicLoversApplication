@@ -1,15 +1,19 @@
 import React from 'react';
-import { Text, Button, View, Image, StyleSheet,TouchableOpacity } from 'react-native';
-
+import { Text, Button, View, Image, StyleSheet,TouchableOpacity, ImageBackground } from 'react-native';
 
 export default function Landing({navigation}) {
   return (
+
+  <ImageBackground
+        source={require('../../assets/background.png')} 
+        style={{ flex: 1 }}
+      >
 <<<<<<< Updated upstream
     <View style={styles.container}>
       
       <Image 
       // Currently Imnage is directly in the componentse folder need to figure out how to route from images folder
-      source={require('./MindBridge_Logo.png')}
+      source={require('../../assets/MindBridge_Logo.png')}
       style={styles.image}
       />
 
@@ -45,6 +49,7 @@ export default function Landing({navigation}) {
 >>>>>>> Stashed changes
 
     </View>
+  </ImageBackground>
   )
 };
 
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightpink',
+    
   },
   image: {
     justifyContent: 'center',
