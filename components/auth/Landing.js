@@ -8,7 +8,6 @@ export default function Landing({navigation}) {
         source={require('../../assets/background.png')} 
         style={{ flex: 1 }}
       >
-<<<<<<< Updated upstream
     <View style={styles.container}>
       
       <Image 
@@ -37,16 +36,14 @@ export default function Landing({navigation}) {
       onPress={()=> navigation.navigate('About')}>
         <Text style={styles.buttonText}> About  </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity style = {styles.button}
+      //TODO: Fix styling for text for some reason its not working with the styling 
+      // Note: Currenlty no page 'About' will give navigation error when testing 
+      onPress={()=> navigation.navigate('FAQ')}>
+        <Text style={styles.buttonText}> FAQ  </Text>
+      </TouchableOpacity>
     
-=======
-    <View style={{flex:1, justifyContent: 'center'}}>
-      <Button
-        title = "Register"
-        onPress={()=> navigation.navigate('Register')}/>
-        <Button
-        title = "FAQs"
-        onPress={()=> navigation.navigate('FAQs')}/>
->>>>>>> Stashed changes
 
     </View>
   </ImageBackground>
