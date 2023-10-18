@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, ImageBackground, Keyboard } from 'react-native';
 import { FIRESTORE_DB } from '../../../../App';
 import { setDoc, doc, addDoc, collection } from "firebase/firestore";
 
@@ -11,6 +11,8 @@ export default function AddPostScreen({ route }) {
     try {
       const db = FIRESTORE_DB;
       const user = route.params?.user;
+      console.log("USER OBJECT FROM THE AddPostScreen", {user})
+
       const docRef = addDoc(collection(db, 'posts'), {
         text: postText,
         imageURI: imageURI, // If imageURI is null, it means no image was selected
@@ -30,38 +32,41 @@ export default function AddPostScreen({ route }) {
       source={require('../../../../assets/background.png')}
       style={{ flex: 1 }}
     >
-      <View style={styles.container}>
-        <Text style={styles.title}>Add post!</Text>
-        <View style={styles.textInputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="What's on your mind?"
-            value={postText}
-            onChangeText={(text) => setPostText(text)}
-            placeholderTextColor="black"
-            multiline={true}
-          />
-            <Image
-              source ={require('../../../../assets/heart.png')}
-              style={styles.imageInTextBox} // Style for the image inside the text box
+      <>
+        <TouchableOpacity activeOpacity={1} style={styles.container} onPress={Keyboard.dismiss}>
+          <Text style={styles.title}>Add post!</Text>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="What's on your mind?"
+              value={postText}
+              onChangeText={(text) => setPostText(text)}
+              placeholderTextColor="black"
+              multiline={true}
+              onSubmitEditing={handleCreatePost}
             />
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            //Need to open image picker and implement this 
-            // and set the selected image URI to the state
-          }}
-        >
-          <Text style={styles.buttonText}>Select Image</Text>
+            <Image
+              source={require('../../../../assets/heart.png')}
+              style={styles.imageInTextBox}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              // Need to open the image picker and implement this
+              // and set the selected image URI to the state
+            }}
+          >
+            <Text style={styles.buttonText}>Select Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleCreatePost}
+          >
+            <Text style={styles.buttonText}>Post</Text>
+          </TouchableOpacity>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleCreatePost}
-        >
-          <Text style={styles.buttonText}>Post</Text>
-        </TouchableOpacity>
-      </View>
+      </>
     </ImageBackground>
   );
 }
