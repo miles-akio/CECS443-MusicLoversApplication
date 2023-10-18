@@ -32,7 +32,7 @@ import LoginScreen from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPass';
 import Container from './components/auth/navigation/container';
 import AboutScreen from './components/auth/About';
-import FAQ from './components/auth/FAQ';
+import FAQ from './components/auth/Faq';
 
 const Stack = createNativeStackNavigator();
 const auth = FIREBASE_AUTH;

@@ -1,39 +1,62 @@
-//Avlokita's Work
-
-import * as React from 'react'
-import { StyleSheet, View, Text, Image } from "react-native"
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import { FIRESTORE_DB } from '../../../../App';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, getDocs } from 'firebase/firestore';
 
-export default function Home({route, navigation}){
+export default function Home({ route }) {
+  const [posts, setPosts] = useState([]);
+  const db = FIRESTORE_DB;
 
-    const user = route.params?.user;
-    const email = user.email
-    const db = FIRESTORE_DB; 
+  // Function to fetch posts
+  const fetchPosts = async () => {
+    const postsCollection = collection(db, 'posts');
+    const postsQuery = query(postsCollection);
 
-    const usersCollection = collection(db, 'users');
+    try {
+      const querySnapshot = await getDocs(postsQuery);
+      const postsData = [];
 
-    getDocs(usersCollection)
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          console.log(`Name: ${data.name}`);
-        });
-      })
-      .catch((error) => {
-        console.error('Error querying Firestore:', error);
+      querySnapshot.forEach((doc) => {
+        const post = doc.data();
+        postsData.push(post);
       });
 
-    // NOTE: Container will be switched from what we import in styles 
-    return(       
-        <View> 
-        
-            <Text style ={styles.title}>Welcome {email}</Text>
-      
-        </View>
-    )
-        
+      setPosts(postsData);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch posts when the component mounts
+    fetchPosts();
+  }, []); // The empty dependency array ensures it runs once when the component mounts
+
+  // This effect will run whenever a new post is added
+  useEffect(() => {
+    if (route.params?.newPostAdded) {
+      // Fetch posts again to update the list
+      fetchPosts();
+    }
+  }, [route.params?.newPostAdded]);
+
+  return (
+    <View>
+      {posts.map((post, index) => (
+        <Card key={index}>
+          <Card.Content>
+            <Title>{post.userDisplayName}</Title>
+            <Paragraph>{post.text}</Paragraph>
+          </Card.Content>
+        </Card>
+      ))}
+    </View>
+  );
 }
+
+// Other styles...
+
 
 // TODO: Add to styling sheet instead
 const styles = StyleSheet.create({
