@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { FIRESTORE_DB } from '../../../../App';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default function Home({ route }) {
   const [posts, setPosts] = useState([]);
   const db = FIRESTORE_DB;
+  const user = route.params?.user;
+  const [userName, setUserName] = useState(''); // State to store the user's name
+
+  // Function to fetch the user's name
+  const fetchUserName = async () => {
+    try {
+      const userDoc = doc(db, 'users', user.uid);
+      const userDocSnapshot = await getDoc(userDoc);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        setUserName(userData.name);
+      }
+    } catch (error) {
+      console.error('Error fetching user name:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserName();
+  }, []); // Fetch the user's name when the component mounts
 
   // Function to fetch posts
   const fetchPosts = async () => {
@@ -26,7 +47,7 @@ export default function Home({ route }) {
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
-  };
+  }
 
   useEffect(() => {
     // Fetch posts when the component mounts
@@ -42,41 +63,44 @@ export default function Home({ route }) {
   }, [route.params?.newPostAdded]);
 
   return (
-    <View>
-      {posts.map((post, index) => (
-        <Card key={index}>
-          <Card.Content>
-            <Title>{post.userDisplayName}</Title>
-            <Paragraph>{post.text}</Paragraph>
-          </Card.Content>
-        </Card>
-      ))}
-    </View>
+    <ImageBackground
+      source={require('../../../../assets/background.png')}
+      style={styles.container}
+    >
+      <Text style={styles.welcomeText}>Hello {userName || 'user'}, Welcome!</Text>
+      <ScrollView>
+        {posts.map((post, index) => (
+          <Card key={index} style={styles.card}>
+            <Card.Content>
+              <Title>{post.userDisplayName}</Title>
+              <Paragraph>{post.text}</Paragraph>
+            </Card.Content>
+          </Card>
+        ))}
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
-// Other styles...
-
-
-// TODO: Add to styling sheet instead
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-
-    temp : {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'blue',
-    },
-    title: {
-        justifyContent: 'center',
-        fontSize: 24, // Adjust the font size as needed
-        fontWeight: 'bold', // Make the text bold
-        color: 'black', // Set the text color to black
-        },
-
-
-  });
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: 'white',
+    margin: 20,
+    marginBottom: 40,
+  },
+  card: {
+    width: 400,
+    marginVertical: 10,
+    height: 'auto', // Allow the card height to adjust based on content
+  },
+  description: {
+    fontSize: 16, // Adjust the font size for descriptions
+  },
+});

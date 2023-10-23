@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, ImageBackground, Keyboard } from 'react-native';
 import { FIRESTORE_DB } from '../../../../App';
-import { setDoc, doc, addDoc, collection } from "firebase/firestore";
+import { setDoc, doc, addDoc, collection, getDoc } from 'firebase/firestore';
 
 export default function AddPostScreen({ route }) {
   const [postText, setPostText] = useState('');
   const [imageURI, setImageURI] = useState(null);
+  const [userName, setUserName] = useState(''); // State to store the user's name
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const db = FIRESTORE_DB;
+        const user = route.params?.user;
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          setUserName(userData.name);
+        }
+      } catch (error) {
+        console.error('Error fetching user name:', error);
+      }
+    };
+
+    fetchUserName();
+  }, [route.params]);
 
   const handleCreatePost = async () => {
     try {
       const db = FIRESTORE_DB;
       const user = route.params?.user;
-      console.log("USER OBJECT FROM THE AddPostScreen", {user})
+      console.log("USER OBJECT FROM THE AddPostScreen", { user });
 
       const docRef = addDoc(collection(db, 'posts'), {
         text: postText,
-        imageURI: imageURI, // If imageURI is null, it means no image was selected
-        userId: user.uid, // Link the post to the user
+        imageURI: imageURI,
+        userId: user.uid,
+        userDisplayName: userName, // Store the user's name in the post
       });
 
       console.log('Post created with ID: ', docRef);
-      setPostText(''); // Clear the text input
-      setImageURI(null); // Clear the selected image
+      setPostText('');
+      setImageURI(null);
     } catch (error) {
       console.error('Error adding post: ', error);
     }
