@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, ImageBackground, Keyboard } from 'react-native';
 import { FIRESTORE_DB } from '../../../../App';
-import { setDoc, doc, addDoc, collection, getDoc } from 'firebase/firestore';
+import { setDoc, doc, addDoc, collection, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 export default function AddPostScreen({ route }) {
   const [postText, setPostText] = useState('');
@@ -32,13 +32,13 @@ export default function AddPostScreen({ route }) {
     try {
       const db = FIRESTORE_DB;
       const user = route.params?.user;
-      console.log("USER OBJECT FROM THE AddPostScreen", { user });
 
       const docRef = addDoc(collection(db, 'posts'), {
         text: postText,
         imageURI: imageURI,
         userId: user.uid,
-        userDisplayName: userName, // Store the user's name in the post
+        userDisplayName: userName,
+        comments: [], // Initialize an empty array for comments
       });
 
       console.log('Post created with ID: ', docRef);
@@ -46,6 +46,28 @@ export default function AddPostScreen({ route }) {
       setImageURI(null);
     } catch (error) {
       console.error('Error adding post: ', error);
+    }
+  };
+
+  const handleCreateComment = async (postId, commentText) => {
+    try {
+      const db = FIRESTORE_DB;
+      const user = route.params?.user;
+
+      const postDocRef = doc(db, 'posts', postId);
+
+      // Update the post document to add a new comment
+      await updateDoc(postDocRef, {
+        comments: arrayUnion({
+          userDisplayName: userName,
+          text: commentText,
+        }),
+      });
+
+      // Clear the comment input field
+      setPostText('');
+    } catch (error) {
+      console.error('Error adding comment: ', error);
     }
   };
 
@@ -72,15 +94,6 @@ export default function AddPostScreen({ route }) {
               style={styles.imageInTextBox}
             />
           </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              // Need to open the image picker and implement this
-              // and set the selected image URI to the state
-            }}
-          >
-            <Text style={styles.buttonText}>Select Image</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={handleCreatePost}
