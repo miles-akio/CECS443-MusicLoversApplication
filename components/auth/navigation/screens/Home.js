@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { FIRESTORE_DB } from '../../../../App';
 import { collection, query, getDocs, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 export default function Home({ route }) {
   const [posts, setPosts] = useState([]);
-  const [commentTexts, setCommentTexts] = useState([]); // State for comment texts
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [commentTexts, setCommentTexts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const db = FIRESTORE_DB;
   const user = route.params?.user;
   const [userName, setUserName] = useState('');
@@ -24,7 +24,7 @@ export default function Home({ route }) {
     } catch (error) {
       console.error('Error fetching user name:', error);
     }
-  }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -36,31 +36,33 @@ export default function Home({ route }) {
 
       querySnapshot.forEach((doc) => {
         const post = doc.data();
+
+        if (!post.likes) {
+          post.likes = [];
+        }
+
         postsData.push({ id: doc.id, ...post });
       });
 
       setPosts(postsData);
 
-      // Initialize comment input states for each post
       const initialCommentTexts = postsData.map(() => '');
       setCommentTexts(initialCommentTexts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
-  }
+  };
 
   const handleAddComment = async (postId, postIndex) => {
     try {
       const postDocRef = doc(db, 'posts', postId);
 
-      // Get the comment text for the current post
       const currentCommentText = commentTexts[postIndex];
 
       if (currentCommentText.trim() === '') {
-        return; // Don't add empty comments
+        return;
       }
 
-      // Update the post document to add a new comment
       await updateDoc(postDocRef, {
         comments: arrayUnion({
           userDisplayName: userName,
@@ -68,15 +70,27 @@ export default function Home({ route }) {
         }),
       });
 
-      // Clear the comment input field for the current post
       const updatedCommentTexts = [...commentTexts];
       updatedCommentTexts[postIndex] = '';
       setCommentTexts(updatedCommentTexts);
 
-      // Refresh the posts after adding a comment
       fetchPosts();
     } catch (error) {
       console.error('Error adding comment: ', error);
+    }
+  };
+
+  const handleLikePost = async (postId) => {
+    try {
+      const postDocRef = doc(db, 'posts', postId);
+
+      await updateDoc(postDocRef, {
+        likes: arrayUnion(userName),
+      });
+
+      fetchPosts();
+    } catch (error) {
+      console.error('Error adding like: ', error);
     }
   };
 
@@ -85,7 +99,6 @@ export default function Home({ route }) {
     fetchPosts();
   }, []);
 
-  // Filter posts based on the search query
   const filteredPosts = posts.filter((post) => {
     return (
       post.userDisplayName && post.userDisplayName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -98,15 +111,12 @@ export default function Home({ route }) {
       style={styles.container}
     >
       <Text style={styles.welcomeText}>Hello {userName || 'user'}, Welcome!</Text>
-
-      {/* Search bar */}
       <TextInput
         style={styles.searchInput}
         placeholder="Search by user name..."
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-
       <ScrollView style={styles.postsContainer}>
         {filteredPosts.map((post, index) => (
           <Card key={index} style={styles.card}>
@@ -124,7 +134,13 @@ export default function Home({ route }) {
                   ))}
                 </View>
               )}
-              {/* Comment input field and button for the current post */}
+              <TouchableOpacity onPress={() => handleLikePost(post.id)}>
+                <Image
+                  source={require('../../../../assets/heart.png')}
+                  style={styles.likeButton}
+                />
+              </TouchableOpacity>
+              <Text style={styles.likesCount}>{post.likes.length} Likes</Text>
               <TextInput
                 style={styles.commentInput}
                 placeholder="Add a comment..."
@@ -154,13 +170,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },likeButton: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+    marginTop: 10,
+  },
+  likesCount: {
+    fontSize: 16,
+    marginTop: 5,
+    marginBottom: 10,
   },
   welcomeText: {
     fontSize: 50,
     fontWeight: 'bold',
     color: 'white',
-    margin: 20,
-    marginBottom: 20,
+    marginTop: 40,
   },
   Title: {
     fontSize: 20,

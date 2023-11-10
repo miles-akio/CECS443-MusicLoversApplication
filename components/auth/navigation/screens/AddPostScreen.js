@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Image, TouchableOpacity, StyleSheet, ImageBackground, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, Keyboard } from 'react-native';
 import { FIRESTORE_DB } from '../../../../App';
-import { setDoc, doc, addDoc, collection, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 export default function AddPostScreen({ route }) {
   const [postText, setPostText] = useState('');
   const [imageURI, setImageURI] = useState(null);
-  const [userName, setUserName] = useState(''); // State to store the user's name
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -33,41 +33,20 @@ export default function AddPostScreen({ route }) {
       const db = FIRESTORE_DB;
       const user = route.params?.user;
 
-      const docRef = addDoc(collection(db, 'posts'), {
+      const docRef = await addDoc(collection(db, 'posts'), {
         text: postText,
         imageURI: imageURI,
         userId: user.uid,
         userDisplayName: userName,
-        comments: [], // Initialize an empty array for comments
+        comments: [],
+        likes: [],
       });
 
-      console.log('Post created with ID: ', docRef);
+      console.log('Post created with ID: ', docRef.id);
       setPostText('');
       setImageURI(null);
     } catch (error) {
       console.error('Error adding post: ', error);
-    }
-  };
-
-  const handleCreateComment = async (postId, commentText) => {
-    try {
-      const db = FIRESTORE_DB;
-      const user = route.params?.user;
-
-      const postDocRef = doc(db, 'posts', postId);
-
-      // Update the post document to add a new comment
-      await updateDoc(postDocRef, {
-        comments: arrayUnion({
-          userDisplayName: userName,
-          text: commentText,
-        }),
-      });
-
-      // Clear the comment input field
-      setPostText('');
-    } catch (error) {
-      console.error('Error adding comment: ', error);
     }
   };
 
@@ -105,6 +84,7 @@ export default function AddPostScreen({ route }) {
     </ImageBackground>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
