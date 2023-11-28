@@ -113,7 +113,7 @@ export default function Home({ route }) {
       <Text style={styles.welcomeText}>Hello {userName || 'user'}, Welcome!</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search by user name..."
+        placeholder="Search post by name..."
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   card: {
-    width: 400,
+    width: 380,
     marginVertical: 10,
     height: 'auto',
   },
@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   searchInput: {
-    width: '100%',
-    height: 30, // Adjusted the height
+    width: '90%',
+    height: 40, // Adjusted the height
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 20,

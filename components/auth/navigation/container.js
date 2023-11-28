@@ -1,5 +1,3 @@
-//Avlokita's Work
-
 import * as React from 'react'
 import { StyleSheet, View, Text } from "react-native"
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +7,7 @@ import Setting from './screens/Setting';
 import UserProfile from './screens/UserProfile';
 import QHG from './screens/QHG'
 import AddPostScreen from './screens/AddPostScreen'; 
+import AddFriends from './screens/AddFriends';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +18,8 @@ export default function Container({route,navigation}){
     console.log("USER OBJECT FROM THE CONTAINER", {user})
     console.log("USER FROM THE CONTAINER:", {email})
     console.log("USER UID FROM THE CONTAINER:", {Uid})
+
+    // Omitted settings until finalized --> Consider linking in user profile instead 
     return(
 
         <NavigationContainer independent={true}>
@@ -26,12 +27,12 @@ export default function Container({route,navigation}){
                 <Tab.Screen name="Home" component={Home} 
                 initialParams={{ user }} // Pass user as a parameter
                 />
-                <Tab.Screen name="Setting" component={Setting} />
                 <Tab.Screen name="Add Post" component={AddPostScreen}
                 initialParams={{ user }} // Pass user as a parameter
                 />
+                <Tab.Screen name="Add Friends" component={AddFriends} />
+                <Tab.Screen name="QHG" component={QHG} />
                 <Tab.Screen name="User Profile" component={UserProfile} />
-                <Tab.Screen name="Quick Help Guide" component={QHG} />
             </Tab.Navigator>
         </NavigationContainer>
         
