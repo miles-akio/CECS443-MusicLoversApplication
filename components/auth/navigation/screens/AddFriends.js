@@ -46,9 +46,14 @@ export default function AddFriends({ navigation }) {
       const querySnapshot = await getDocs(usersCollectionRef);
       const usersData = [];
 
+      // Get the current user's friends list
+      const userDocRef = doc(db, 'users', currentUser.uid);
+      const userDoc = await getDoc(userDocRef);
+      const currentUserFriends = userDoc.data()?.friends || [];
+
       querySnapshot.forEach((doc) => {
         // Exclude the current user and friends from the list
-        if (doc.id !== currentUser.uid && !isFriend(doc.id)) {
+        if (doc.id !== currentUser.uid && !isFriend(doc.id, currentUserFriends)) {
           usersData.push({
             id: doc.id,
             ...doc.data(),
@@ -62,10 +67,9 @@ export default function AddFriends({ navigation }) {
     }
   };
 
-  const isFriend = (userId) => {
+  const isFriend = (userId, currentUserFriends) => {
     // Check if userId is in the friends list
-    const userData = currentUser || {}; // Handle the case where currentUser is undefined
-    return userData.friends?.some((friend) => friend.uid === userId);
+    return currentUserFriends?.some((friend) => friend.uid === userId);
   };
 
   const handleAddFriend = async (friendId, friendName) => {
@@ -83,7 +87,7 @@ export default function AddFriends({ navigation }) {
       }
 
       // Check if the friend is already in the user's friends list
-      if (!isFriend(friendId)) {
+      if (!isFriend(friendId, userData.friends)) {
         // Update the user's friends list to include the new friend
         userData.friends.push({ uid: friendId, name: friendName });
 
@@ -157,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 200,
+    width: 250,
   },
   cardText: {
     fontSize: 18,
@@ -173,5 +177,3 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
-
