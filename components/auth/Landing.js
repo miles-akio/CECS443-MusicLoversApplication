@@ -16,8 +16,8 @@ export default function Landing({navigation}) {
       style={styles.image}
       />
 
-      <Text style={styles.title}>Mind Bridge</Text>
-      <Text> Never Walk Alone</Text>
+      <Text style={styles.title}>Music Lovers</Text>
+      <Text> Never Listen Alone</Text>
 
       <TouchableOpacity style = {styles.button}
       onPress={()=> navigation.navigate('Register')}>
